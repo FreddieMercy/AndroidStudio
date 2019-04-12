@@ -1,14 +1,12 @@
 package com.example.googleuiautomator;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
-
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
-
+import androidx.test.uiautomator.UiDevice;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.Until;
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -16,11 +14,21 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.googleuiautomator", appContext.getPackageName());
+    // private static final String BASIC_SAMPLE_PACKAGE = "com.example.android.testing.uiautomator.BasicSample";
+    private static final int LAUNCH_TIMEOUT = 5000;
+    //  private static final String STRING_TO_BE_TYPED = "UiAutomator";
+    private UiDevice mDevice;
+
+    @Test
+    public void testFTU() {
+        // Initialize UiDevice instance
+        mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
+        //mDevice.wait(Until.hasObject(By.pkg("com.android.settings").depth(0)), LAUNCH_TIMEOUT);
+
+        //mDevice.findObject(By.text("Your Phone Companion")).click();
+        //mDevice.findObject(By.text("Allow")).click();
+
     }
 }
