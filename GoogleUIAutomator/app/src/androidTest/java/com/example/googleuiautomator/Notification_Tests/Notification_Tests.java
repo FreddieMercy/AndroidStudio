@@ -9,6 +9,10 @@ import org.junit.runner.RunWith;
 import androidx.test.uiautomator.UiDevice;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObject2;
+import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 /**
  * Instrumented test, which will execute on an Android device.
@@ -23,7 +27,7 @@ public class Notification_Tests {
     //  private static final String STRING_TO_BE_TYPED = "UiAutomator";
     private UiDevice mDevice;
 
-    @Test
+    //@Test
     public void testPressHome() {
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(getInstrumentation());
@@ -35,7 +39,7 @@ public class Notification_Tests {
 
     }
 
-    @Test
+    //@Test
     public void testDevice() {
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(getInstrumentation());
@@ -46,5 +50,15 @@ public class Notification_Tests {
         //mDevice.findObject(By.text("Your Phone Companion")).click();
         //mDevice.findObject(By.text("Allow")).click();
 
+    }
+
+    @Test
+    public void testUISelector() throws UiObjectNotFoundException {
+        // Initialize UiDevice instance
+        mDevice = UiDevice.getInstance(getInstrumentation());
+        UiSelector l = new UiSelector().text("Chrome");
+        //UiObject c = mDevice.findObject(l);
+        UiObject c = new UiObject(l);
+        c.click();
     }
 }
