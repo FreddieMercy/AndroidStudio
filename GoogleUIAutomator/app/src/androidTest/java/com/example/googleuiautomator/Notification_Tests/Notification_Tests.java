@@ -1,7 +1,9 @@
 package com.example.googleuiautomator.Notification_Tests;
 
 
+import android.graphics.Point;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
@@ -64,7 +66,7 @@ public class Notification_Tests {
         c.click();
     }
 
-    @Test
+    //@Test
     public void testUIObject() throws UiObjectNotFoundException {
         UiDevice.getInstance(getInstrumentation());
         UiObject tv = new UiObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/recipient_text_view"));
@@ -74,5 +76,16 @@ public class Notification_Tests {
         //}
 
         //tv.clearTextField();
+    }
+
+    @Test
+    public void testUIObjectGesture() throws UiObjectNotFoundException {
+        mDevice = UiDevice.getInstance(getInstrumentation());
+
+        UiObject chrome = mDevice.findObject(new UiSelector().className("android.widget.FrameLayout"));
+        chrome.pinchOut(80, 20);
+        chrome.pinchIn(80, 20);
+        chrome.performTwoPointerGesture(new Point(200,200), new Point(400, 200),new Point(200,400), new Point(400, 400), 30);
+        //chrome.performMultiPointerGesture(new MotionEvent.PointerCoords[]{new MotionEvent.PointerCoords(200,400)});//https://www.programcreek.com/java-api-examples/index.php?api=android.view.MotionEvent.PointerCoords
     }
 }
