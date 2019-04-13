@@ -78,7 +78,7 @@ public class Notification_Tests {
         //tv.clearTextField();
     }
 
-    @Test
+    //@Test
     public void testUIObjectGesture() throws UiObjectNotFoundException {
         mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -87,5 +87,19 @@ public class Notification_Tests {
         chrome.pinchIn(80, 20);
         chrome.performTwoPointerGesture(new Point(200,200), new Point(400, 200),new Point(200,400), new Point(400, 400), 30);
         //chrome.performMultiPointerGesture(new MotionEvent.PointerCoords[]{new MotionEvent.PointerCoords(200,400)});//https://www.programcreek.com/java-api-examples/index.php?api=android.view.MotionEvent.PointerCoords
+    }
+
+    @Test
+    public void testUIObjectExists() throws UiObjectNotFoundException {
+        mDevice = UiDevice.getInstance(getInstrumentation());
+        UiObject chrome = new UiObject(new UiSelector().text("Chrome"));
+
+        //chrome.waitForExists(3000); //no exception thrown
+        if(!chrome.waitForExists(3000)){
+            throw  new UiObjectNotFoundException("Time out");
+        }
+        if(!chrome.waitUntilGone(3000)){
+            throw  new UiObjectNotFoundException("Time in");
+        }
     }
 }
