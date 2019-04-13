@@ -52,13 +52,27 @@ public class Notification_Tests {
 
     }
 
-    @Test
+    //@Test
     public void testUISelector() throws UiObjectNotFoundException {
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(getInstrumentation());
         UiSelector l = new UiSelector().text("Chrome");
         //UiObject c = mDevice.findObject(l);
         UiObject c = new UiObject(l);
+        c.dragTo(c.getBounds().centerX(),c.getBounds().centerY()-500,300);
+        ///c.swipeUp(300);
         c.click();
+    }
+
+    @Test
+    public void testUIObject() throws UiObjectNotFoundException {
+        UiDevice.getInstance(getInstrumentation());
+        UiObject tv = new UiObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/recipient_text_view"));
+        tv.clearTextField();
+        //if (tv.exists()) {
+            tv.setText(tv.getText()+"abc");
+        //}
+
+        //tv.clearTextField();
     }
 }
