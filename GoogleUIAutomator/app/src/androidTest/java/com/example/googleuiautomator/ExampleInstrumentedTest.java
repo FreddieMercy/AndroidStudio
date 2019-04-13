@@ -24,11 +24,10 @@ public class ExampleInstrumentedTest {
     public void testFTU() {
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(getInstrumentation());
-        mDevice.pressHome();
-        //mDevice.wait(Until.hasObject(By.pkg("com.android.settings").depth(0)), LAUNCH_TIMEOUT);
+        mDevice.wait(Until.hasObject(By.pkg("com.android.settings").depth(0)), LAUNCH_TIMEOUT);
 
-        //mDevice.findObject(By.text("Your Phone Companion")).click();
-        //mDevice.findObject(By.text("Allow")).click();
+        mDevice.findObject(By.text("Your Phone Companion")).click();
+        mDevice.findObject(By.text("Allow")).click();
 
     }
 }
