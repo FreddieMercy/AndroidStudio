@@ -4,6 +4,8 @@ package com.example.googleuiautomator.Notification_Tests;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Build;
+import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
@@ -11,6 +13,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import androidx.test.uiautomator.Configurator;
 import androidx.test.uiautomator.UiCollection;
 import androidx.test.uiautomator.UiDevice;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
@@ -116,7 +125,7 @@ public class Notification_Tests {
         collection.getChildByText(new UiSelector().text("123"), "Chrome").click();
     }
 
-    @Test
+    //@Test
     public void testUIScrollable() throws UiObjectNotFoundException {
         mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
