@@ -6,6 +6,8 @@ import android.graphics.Point;
 import android.view.KeyEvent;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -32,10 +34,14 @@ public class ExampleInstrumentedTest {
     //  private static final String STRING_TO_BE_TYPED = "UiAutomator";
     private UiDevice mDevice;
 
+    @Before
+    public void setUp_Method(){
+        mDevice = UiDevice.getInstance(getInstrumentation());
+    }
     //@Test
     public void testFTU() {
         // Initialize UiDevice instance
-        mDevice = UiDevice.getInstance(getInstrumentation());
+        //mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.wait(Until.hasObject(By.pkg("com.android.settings").depth(0)), LAUNCH_TIMEOUT);
 
         mDevice.findObject(By.text("Your Phone Companion")).click();
@@ -45,7 +51,7 @@ public class ExampleInstrumentedTest {
     //@Test
     public void testPressHome() {
         // Initialize UiDevice instance
-        mDevice = UiDevice.getInstance(getInstrumentation());
+        //mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
         //mDevice.wait(Until.hasObject(By.pkg("com.android.settings").depth(0)), LAUNCH_TIMEOUT);
 
@@ -57,7 +63,7 @@ public class ExampleInstrumentedTest {
     //@Test
     public void testDevice() {
         // Initialize UiDevice instance
-        mDevice = UiDevice.getInstance(getInstrumentation());
+        //mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
         mDevice.pressKeyCode(KeyEvent.KEYCODE_A);
         //mDevice.wait(Until.hasObject(By.pkg("com.android.settings").depth(0)), LAUNCH_TIMEOUT);
@@ -70,7 +76,7 @@ public class ExampleInstrumentedTest {
     //@Test
     public void testUISelector() throws UiObjectNotFoundException {
         // Initialize UiDevice instance
-        mDevice = UiDevice.getInstance(getInstrumentation());
+        //mDevice = UiDevice.getInstance(getInstrumentation());
         UiSelector l = new UiSelector().text("Chrome");
         //UiObject c = mDevice.findObject(l);
         UiObject c = new UiObject(l);
@@ -81,7 +87,7 @@ public class ExampleInstrumentedTest {
 
     //@Test
     public void testUIObject() throws UiObjectNotFoundException {
-        UiDevice.getInstance(getInstrumentation());
+        //UiDevice.getInstance(getInstrumentation());
         UiObject tv = new UiObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/recipient_text_view"));
         tv.clearTextField();
         //if (tv.exists()) {
@@ -93,7 +99,7 @@ public class ExampleInstrumentedTest {
 
     //@Test
     public void testUIObjectGesture() throws UiObjectNotFoundException {
-        mDevice = UiDevice.getInstance(getInstrumentation());
+        //mDevice = UiDevice.getInstance(getInstrumentation());
 
         UiObject chrome = mDevice.findObject(new UiSelector().className("android.widget.FrameLayout"));
         chrome.pinchOut(80, 20);
@@ -104,7 +110,7 @@ public class ExampleInstrumentedTest {
 
     //@Test
     public void testUIObjectExists() throws UiObjectNotFoundException {
-        mDevice = UiDevice.getInstance(getInstrumentation());
+        //mDevice = UiDevice.getInstance(getInstrumentation());
         UiObject chrome = new UiObject(new UiSelector().text("Chrome"));
 
         //chrome.waitForExists(3000); //no exception thrown
@@ -118,7 +124,7 @@ public class ExampleInstrumentedTest {
 
     //@Test
     public void testUICollection() throws UiObjectNotFoundException {
-        mDevice = UiDevice.getInstance(getInstrumentation());
+        //mDevice = UiDevice.getInstance(getInstrumentation());
         UiCollection collection = new UiCollection(new UiSelector().classNameMatches(".*"));
 
         collection.getChildByText(new UiSelector().text("123"), "Chrome").click();
@@ -126,7 +132,7 @@ public class ExampleInstrumentedTest {
 
     //@Test
     public void testUIScrollable() throws UiObjectNotFoundException {
-        mDevice = UiDevice.getInstance(getInstrumentation());
+        //mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
         //mDevice.pressMenu();
         (new UiObject(new UiSelector().description("Apps"))).click();
@@ -161,7 +167,7 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void testWatcher() throws UiObjectNotFoundException{
-        mDevice = UiDevice.getInstance(getInstrumentation());
+        //mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.registerWatcher("watcher", new UiWatcher() {
             @Override
             public boolean checkForCondition() {
