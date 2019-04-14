@@ -133,6 +133,14 @@ public class Notification_Tests {
         UiObject YouTube = new UiObject(new UiSelector().text("YouTube"));
         appList.scrollIntoView(YouTube);
         YouTube.click();
+
+        mDevice.pressHome();
+        UiObject chrome = new UiObject( new UiSelector().text("Chrome"));
+        chrome.click();
+        appList = new UiScrollable(new UiSelector().className("android.widget.FrameLayout"));
+        appList.setAsHorizontalList();
+        appList.flingBackward();
+        appList.flingForward();
     }
 
     //@Test
