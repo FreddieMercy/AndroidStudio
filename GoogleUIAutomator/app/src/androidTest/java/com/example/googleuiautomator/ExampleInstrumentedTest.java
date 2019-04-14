@@ -1,8 +1,11 @@
 package com.example.googleuiautomator;
 
+import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.os.Bundle;
 import android.view.KeyEvent;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -13,7 +16,11 @@ import org.junit.runner.RunWith;
 
 import androidx.test.uiautomator.UiCollection;
 import androidx.test.uiautomator.UiDevice;
+
+import static androidx.test.platform.app.InstrumentationRegistry.getArguments;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.platform.app.InstrumentationRegistry.registerInstance;
+
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
@@ -33,10 +40,12 @@ public class ExampleInstrumentedTest {
     private static final int LAUNCH_TIMEOUT = 5000;
     //  private static final String STRING_TO_BE_TYPED = "UiAutomator";
     private UiDevice mDevice;
+    private Instrumentation instrumentation;
 
     @Before
     public void setUp_Method(){
-        mDevice = UiDevice.getInstance(getInstrumentation());
+        instrumentation = getInstrumentation();
+        mDevice = UiDevice.getInstance(instrumentation);
     }
     //@Test
     public void testFTU() {
@@ -165,7 +174,7 @@ public class ExampleInstrumentedTest {
         context.startActivity(intent);  //starts the app
     }
 
-    @Test
+    //@Test
     public void testWatcher() throws UiObjectNotFoundException{
         //mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.registerWatcher("watcher", new UiWatcher() {
@@ -206,5 +215,23 @@ public class ExampleInstrumentedTest {
         (new UiObject( new UiSelector().text("Chrome"))).click();
 
 
+    }
+
+    @Test
+    public void testInstrument(){
+        instrumentation.sendStatus(888, getArguments());
+
+        Context cur_context = instrumentation.getContext();
+        Context tar_context = instrumentation.getTargetContext();
+
+        PackageManager pm = cur_context.getPackageManager();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("CUR_CONTEXT", pm.getInstalledPackages(0).get(0).toString());
+        bundle.putString("CUR_CONTEXT", pm.getInstalledPackages(0).get(1).toString());
+
+        registerInstance(instrumentation, bundle);
+
+        instrumentation.sendStatus(889, getArguments());
     }
 }
