@@ -1,6 +1,8 @@
 package com.example.googleuiautomator.Notification_Tests;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -16,6 +18,7 @@ import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiScrollable;
 import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 /**
@@ -105,11 +108,38 @@ public class Notification_Tests {
         }
     }
 
-    @Test
+    //@Test
     public void testUICollection() throws UiObjectNotFoundException {
         mDevice = UiDevice.getInstance(getInstrumentation());
         UiCollection collection = new UiCollection(new UiSelector().classNameMatches(".*"));
 
         collection.getChildByText(new UiSelector().text("123"), "Chrome").click();
+    }
+
+    @Test
+    public void testUIScrollable() throws UiObjectNotFoundException {
+        mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
+        //mDevice.pressMenu();
+        (new UiObject(new UiSelector().description("Apps"))).click();
+        UiScrollable appList = new UiScrollable(new UiSelector().className("android.support.v7.widget.RecyclerView"));
+        //appList.flingToEnd(Integer.MAX_VALUE);
+        appList.getChildByText(new UiSelector().className("android.widget.TextView"), "Slides", true).click();
+
+        mDevice.pressHome();
+        (new UiObject(new UiSelector().description("Apps"))).click();
+        appList = new UiScrollable(new UiSelector().className("android.support.v7.widget.RecyclerView"));
+        appList.flingToBeginning(Integer.MAX_VALUE);
+        UiObject YouTube = new UiObject(new UiSelector().text("YouTube"));
+        appList.scrollIntoView(YouTube);
+        YouTube.click();
+    }
+
+    //@Test
+    public void testRunApp(){
+        Context context = getInstrumentation().getContext(); //gets the context based on the instrumentation
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage("com.google.android.gm");  //sets the intent to start your app
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);  //clear out any previous task, i.e., make sure it starts on the initial screen
+        context.startActivity(intent);  //starts the app
     }
 }
