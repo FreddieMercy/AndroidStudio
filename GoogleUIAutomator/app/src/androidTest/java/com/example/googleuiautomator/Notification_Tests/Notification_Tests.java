@@ -8,6 +8,8 @@ import android.view.MotionEvent;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import androidx.test.uiautomator.UiCollection;
 import androidx.test.uiautomator.UiDevice;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import androidx.test.uiautomator.By;
@@ -89,7 +91,7 @@ public class Notification_Tests {
         //chrome.performMultiPointerGesture(new MotionEvent.PointerCoords[]{new MotionEvent.PointerCoords(200,400)});//https://www.programcreek.com/java-api-examples/index.php?api=android.view.MotionEvent.PointerCoords
     }
 
-    @Test
+    //@Test
     public void testUIObjectExists() throws UiObjectNotFoundException {
         mDevice = UiDevice.getInstance(getInstrumentation());
         UiObject chrome = new UiObject(new UiSelector().text("Chrome"));
@@ -101,5 +103,13 @@ public class Notification_Tests {
         if(!chrome.waitUntilGone(3000)){
             throw  new UiObjectNotFoundException("Time in");
         }
+    }
+
+    @Test
+    public void testUICollection() throws UiObjectNotFoundException {
+        mDevice = UiDevice.getInstance(getInstrumentation());
+        UiCollection collection = new UiCollection(new UiSelector().classNameMatches(".*"));
+
+        collection.getChildByText(new UiSelector().text("123"), "Chrome").click();
     }
 }
