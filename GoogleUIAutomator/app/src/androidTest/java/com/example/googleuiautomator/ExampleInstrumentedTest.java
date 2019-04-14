@@ -17,6 +17,7 @@ import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiScrollable;
 import androidx.test.uiautomator.UiSelector;
+import androidx.test.uiautomator.UiWatcher;
 import androidx.test.uiautomator.Until;
 /**
  * Instrumented test, which will execute on an Android device.
@@ -156,5 +157,48 @@ public class ExampleInstrumentedTest {
         Intent intent = context.getPackageManager().getLaunchIntentForPackage("com.google.android.gm");  //sets the intent to start your app
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);  //clear out any previous task, i.e., make sure it starts on the initial screen
         context.startActivity(intent);  //starts the app
+    }
+
+    @Test
+    public void testWatcher() throws UiObjectNotFoundException{
+        mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.registerWatcher("watcher", new UiWatcher() {
+            @Override
+            public boolean checkForCondition() {
+                mDevice.pressHome();
+                return true;
+            }
+        });
+
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+
+
+
+
+
+
+        mDevice.removeWatcher("watcher");
+
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+        (new UiObject( new UiSelector().text("Chrome"))).click();
+
+
     }
 }
