@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.icu.util.Output;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.KeyEvent;
+import android.widget.TextView;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -15,6 +18,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import androidx.test.uiautomator.BySelector;
 import androidx.test.uiautomator.UiCollection;
 import androidx.test.uiautomator.UiDevice;
 
@@ -24,6 +33,7 @@ import static androidx.test.platform.app.InstrumentationRegistry.registerInstanc
 
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiScrollable;
 import androidx.test.uiautomator.UiSelector;
@@ -247,9 +257,46 @@ public class ExampleInstrumentedTest {
         instrumentation.sendStatus(889, getArguments());
     }
 
-    @Test
-    public void testInstrument2(){
-        //
+    //@Test
+    public void test_dumpWindowHierarchy() throws IOException {
+        //1. dumpWindowHierarchy
+        File file =new File(Environment.getExternalStorageDirectory()+File.separator+"uidump.xml");//phone SD card + "/" +uidump.xml
 
+        if(file.exists()){
+            file.delete();//need permission to write in SD card, add in Manifest.xml
+        }
+
+        file.createNewFile();//need permission to write in SD card, add in Manifest.xml
+
+        OutputStream output = new FileOutputStream(file, true);
+        mDevice.dumpWindowHierarchy(output);
+    }
+
+    //@Test
+    public void test_executeShellCommand() throws IOException {
+        //2. executeShellCommand
+        mDevice.executeShellCommand("am start -n com.android.settings/.Settings");
+    }
+
+    //@Test
+    public void test_UIObject2() throws IOException {
+        //3. UIObject2
+        //UiObject2 obj = mDevice.findObject(new BySelector().text("Chrome"));
+        UiObject2 obj = mDevice.findObject(By.text("Chrome"));
+
+        mDevice.wait(Until.findObject(By.text("Chrome")), 200);
+        obj.click();
+    }
+
+    @Test
+    public void test_findObjects_BySelector() throws IOException {
+        //4. findObjects(BySelector)
+        Bundle b = new Bundle();
+        for(UiObject2 o : mDevice.findObjects(By.clazz(TextView.class))){
+            b.putString("Class: ", o.getText());
+            System.out.println("Found is: "+o.getText());
+        }
+        registerInstance(instrumentation, b);
+        instrumentation.sendStatus(123, getArguments());
     }
 }
