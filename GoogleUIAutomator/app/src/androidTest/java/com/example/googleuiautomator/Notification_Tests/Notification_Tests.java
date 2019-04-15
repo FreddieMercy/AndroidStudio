@@ -1,34 +1,9 @@
 package com.example.googleuiautomator.Notification_Tests;
 
-
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Point;
-import android.os.Build;
-import android.os.Environment;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import androidx.test.uiautomator.Configurator;
-import androidx.test.uiautomator.UiCollection;
 import androidx.test.uiautomator.UiDevice;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import androidx.test.uiautomator.By;
-import androidx.test.uiautomator.UiObject;
-import androidx.test.uiautomator.UiObject2;
-import androidx.test.uiautomator.UiObjectNotFoundException;
-import androidx.test.uiautomator.UiScrollable;
-import androidx.test.uiautomator.UiSelector;
 import androidx.test.uiautomator.Until;
 /**
  * Instrumented test, which will execute on an Android device.

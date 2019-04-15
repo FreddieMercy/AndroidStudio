@@ -3,6 +3,8 @@ package com.example.googleuiautomator;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.icu.util.Output;
@@ -69,7 +71,7 @@ public class ExampleInstrumentedTest {
 
         mDevice.pressHome();
     }
-    //@Test
+    @Test
     public void testFTU() {
         // Initialize UiDevice instance
         //mDevice = UiDevice.getInstance(getInstrumentation());
@@ -79,7 +81,7 @@ public class ExampleInstrumentedTest {
         mDevice.findObject(By.text("Allow")).click();
     }
 
-    //@Test
+    @Test
     public void testPressHome() {
         // Initialize UiDevice instance
         //mDevice = UiDevice.getInstance(getInstrumentation());
@@ -91,7 +93,7 @@ public class ExampleInstrumentedTest {
 
     }
 
-    //@Test
+    @Test
     public void testDevice() {
         // Initialize UiDevice instance
         //mDevice = UiDevice.getInstance(getInstrumentation());
@@ -104,7 +106,7 @@ public class ExampleInstrumentedTest {
 
     }
 
-    //@Test
+    @Test
     public void testUISelector() throws UiObjectNotFoundException {
         // Initialize UiDevice instance
         //mDevice = UiDevice.getInstance(getInstrumentation());
@@ -116,7 +118,7 @@ public class ExampleInstrumentedTest {
         c.click();
     }
 
-    //@Test
+    @Test
     public void testUIObject() throws UiObjectNotFoundException {
         //UiDevice.getInstance(getInstrumentation());
         UiObject tv = new UiObject(new UiSelector().resourceId("com.google.android.apps.messaging:id/recipient_text_view"));
@@ -128,7 +130,7 @@ public class ExampleInstrumentedTest {
         //tv.clearTextField();
     }
 
-    //@Test
+    @Test
     public void testUIObjectGesture() throws UiObjectNotFoundException {
         //mDevice = UiDevice.getInstance(getInstrumentation());
 
@@ -139,7 +141,7 @@ public class ExampleInstrumentedTest {
         //chrome.performMultiPointerGesture(new MotionEvent.PointerCoords[]{new MotionEvent.PointerCoords(200,400)});//https://www.programcreek.com/java-api-examples/index.php?api=android.view.MotionEvent.PointerCoords
     }
 
-    //@Test
+    @Test
     public void testUIObjectExists() throws UiObjectNotFoundException {
         //mDevice = UiDevice.getInstance(getInstrumentation());
         UiObject chrome = new UiObject(new UiSelector().text("Chrome"));
@@ -153,7 +155,7 @@ public class ExampleInstrumentedTest {
         }
     }
 
-    //@Test
+    @Test
     public void testUICollection() throws UiObjectNotFoundException {
         //mDevice = UiDevice.getInstance(getInstrumentation());
         UiCollection collection = new UiCollection(new UiSelector().classNameMatches(".*"));
@@ -161,7 +163,7 @@ public class ExampleInstrumentedTest {
         collection.getChildByText(new UiSelector().text("123"), "Chrome").click();
     }
 
-    //@Test
+    @Test
     public void testUIScrollable() throws UiObjectNotFoundException {
         //mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.pressHome();
@@ -188,7 +190,7 @@ public class ExampleInstrumentedTest {
         appList.flingForward();
     }
 
-    //@Test
+    @Test
     public void testRunApp(){
         Context context = getInstrumentation().getContext(); //gets the context based on the instrumentation
         Intent intent = context.getPackageManager().getLaunchIntentForPackage("com.google.android.gm");  //sets the intent to start your app
@@ -196,7 +198,7 @@ public class ExampleInstrumentedTest {
         context.startActivity(intent);  //starts the app
     }
 
-    //@Test
+    @Test
     public void testWatcher() throws UiObjectNotFoundException{
         //mDevice = UiDevice.getInstance(getInstrumentation());
         mDevice.registerWatcher("watcher", new UiWatcher() {
@@ -218,11 +220,6 @@ public class ExampleInstrumentedTest {
         (new UiObject( new UiSelector().text("Chrome"))).click();
         (new UiObject( new UiSelector().text("Chrome"))).click();
 
-
-
-
-
-
         mDevice.removeWatcher("watcher");
 
         (new UiObject( new UiSelector().text("Chrome"))).click();
@@ -236,10 +233,9 @@ public class ExampleInstrumentedTest {
         (new UiObject( new UiSelector().text("Chrome"))).click();
         (new UiObject( new UiSelector().text("Chrome"))).click();
 
-
     }
 
-    //@Test
+    @Test
     public void testInstrument(){
         instrumentation.sendStatus(888, getArguments());
 
@@ -257,7 +253,7 @@ public class ExampleInstrumentedTest {
         instrumentation.sendStatus(889, getArguments());
     }
 
-    //@Test
+    @Test
     public void test_dumpWindowHierarchy() throws IOException {
         //1. dumpWindowHierarchy
         File file =new File(Environment.getExternalStorageDirectory()+File.separator+"uidump.xml");//phone SD card + "/" +uidump.xml
@@ -272,13 +268,13 @@ public class ExampleInstrumentedTest {
         mDevice.dumpWindowHierarchy(output);
     }
 
-    //@Test
+    @Test
     public void test_executeShellCommand() throws IOException {
         //2. executeShellCommand
         mDevice.executeShellCommand("am start -n com.android.settings/.Settings");
     }
 
-    //@Test
+    @Test
     public void test_UIObject2() throws IOException {
         //3. UIObject2
         //UiObject2 obj = mDevice.findObject(new BySelector().text("Chrome"));
@@ -298,5 +294,30 @@ public class ExampleInstrumentedTest {
         }
         registerInstance(instrumentation, b);
         instrumentation.sendStatus(123, getArguments());
+    }
+    @Test
+    public void testRunAllAppByPackages(){
+        Context context = getInstrumentation().getContext(); //gets the context based on the instrumentation
+
+        for(PackageInfo p: context.getPackageManager().getInstalledPackages(0)) {
+            Intent intent = context.getPackageManager().getLaunchIntentForPackage(p.packageName);  //sets the intent to start your app
+            if (intent != null) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);  //clear out any previous task, i.e., make sure it starts on the initial screen
+                context.startActivity(intent);  //starts the app
+            }
+        }
+    }
+
+    @Test
+    public void testRunAllAppByLaunchApps(){
+        Context context = getInstrumentation().getContext(); //gets the context based on the instrumentation
+
+        for(ApplicationInfo p: context.getPackageManager().getInstalledApplications(0)) {
+            Intent intent = context.getPackageManager().getLaunchIntentForPackage(p.packageName);  //sets the intent to start your app
+            if (intent != null) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);  //clear out any previous task, i.e., make sure it starts on the initial screen
+                context.startActivity(intent);  //starts the app
+            }
+        }
     }
 }
