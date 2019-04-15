@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.security.MessageDigest;
 
 import androidx.test.uiautomator.BySelector;
 import androidx.test.uiautomator.Direction;
@@ -350,5 +351,19 @@ public class ExampleInstrumentedTest {
         UiObject2 appList = mDevice.findObject(By.clazz("android.support.v7.widget.RecyclerView"));
         mDevice.wait(Until.findObject(By.clazz("android.support.v7.widget.RecyclerView")), 3000);
         appList.scroll(Direction.DOWN, .5f);
+
+    }
+
+    @Test
+    public void test_UIObj2_Wait() throws UiObjectNotFoundException {
+        mDevice.pressHome();
+        //fail, because view is null
+        //UiObject2 view = mDevice.findObject(By.res("com.android.camera2:id/rounded_thumbnail_view"));
+        //view.wait(Until.findObject(By.res("com.android.camera2:id/rounded_thumbnail_view")), 30000);
+        //view.click();
+
+        UiObject view = new UiObject(new UiSelector().resourceId("com.android.camera2:id/rounded_thumbnail_view"));
+        view.waitForExists(30000);
+        view.click();
     }
 }
