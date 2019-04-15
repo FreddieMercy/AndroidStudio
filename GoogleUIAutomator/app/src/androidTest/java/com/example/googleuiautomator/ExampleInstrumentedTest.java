@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +47,17 @@ public class ExampleInstrumentedTest {
     public void setUp_Method(){
         instrumentation = getInstrumentation();
         mDevice = UiDevice.getInstance(instrumentation);
+    }
+
+    @After
+    public void afterEachTest(){
+        UiObject cur = new UiObject(new UiSelector().resourceId("com.google.android.googlequicksearchbox:id/workspace"));
+
+        while (!cur.exists()){
+            mDevice.pressBack();
+        }
+
+        mDevice.pressHome();
     }
     //@Test
     public void testFTU() {
@@ -217,7 +229,7 @@ public class ExampleInstrumentedTest {
 
     }
 
-    @Test
+    //@Test
     public void testInstrument(){
         instrumentation.sendStatus(888, getArguments());
 
@@ -233,5 +245,11 @@ public class ExampleInstrumentedTest {
         registerInstance(instrumentation, bundle);
 
         instrumentation.sendStatus(889, getArguments());
+    }
+
+    @Test
+    public void testInstrument2(){
+        //
+
     }
 }
