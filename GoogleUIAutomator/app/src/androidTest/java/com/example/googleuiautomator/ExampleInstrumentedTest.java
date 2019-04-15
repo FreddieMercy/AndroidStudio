@@ -8,15 +8,18 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.icu.util.Output;
+import android.net.nsd.NsdManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.RemoteException;
+import android.provider.Settings;
 import android.view.KeyEvent;
 import android.widget.TextView;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -378,7 +381,6 @@ public class ExampleInstrumentedTest {
         }
     }
 
-
     @Test
     public void test_By_Depth() throws UiObjectNotFoundException {
         mDevice.pressHome();
@@ -389,5 +391,30 @@ public class ExampleInstrumentedTest {
         System.out.println("[Depth(from, to)], both inclusive: "+mDevice.findObjects(By.clazz(p).depth(1,2)).size());
         System.out.println("[MaxDepth(upperLimit)], inclusive: "+mDevice.findObjects(By.clazz(p).maxDepth(2)).size());
         System.out.println("[MinDepth(lowerLimit)], inclusive: "+mDevice.findObjects(By.clazz(p).minDepth(2)).size());
+    }
+
+    @Test
+    public void test_By_hasChild_Descendant() throws UiObjectNotFoundException {
+        Assert.assertTrue(mDevice.hasObject(By.text("Chrome")));
+        Assert.assertTrue(mDevice.findObject(By.hasDescendant(By.text("Chrome")))!=null);
+    }
+
+    @Test
+    public void test_Dropdown() throws UiObjectNotFoundException {
+        UiObject2 screen = mDevice.findObject(By.res("com.google.android.googlequicksearchbox:id/workspace"));
+        screen.swipe(Direction.DOWN, .5f);
+        mDevice.findObject(By.text("Backup")).getParent().click();
+    }
+
+    @Test
+    public void test_Until() throws UiObjectNotFoundException {
+
+        Context context = getInstrumentation().getContext();
+        context.startActivity(new Intent(Settings.ACTION_BLUETOOTH_SETTINGS));
+        mDevice.wait(Until.findObject(By.res("com.android.settings:id/switch_bar")), 10000);
+
+        UiObject2 btn = mDevice.findObject(By.res("com.android.settings:id/switch_bar"));
+
+        Assert.assertTrue(btn.wait(Until.checked(true), 30000));
     }
 }
