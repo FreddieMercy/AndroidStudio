@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.security.MessageDigest;
+import java.util.regex.Pattern;
 
 import androidx.test.uiautomator.BySelector;
 import androidx.test.uiautomator.Direction;
@@ -365,5 +366,28 @@ public class ExampleInstrumentedTest {
         UiObject view = new UiObject(new UiSelector().resourceId("com.android.camera2:id/rounded_thumbnail_view"));
         view.waitForExists(30000);
         view.click();
+    }
+
+    @Test
+    public void test_Pattern() throws UiObjectNotFoundException {
+        mDevice.pressHome();
+        Pattern p = Pattern.compile(".*");
+
+        for(UiObject2 o : mDevice.findObjects(By.clazz(p))){
+            System.out.println("Pattern [ClassName]: "+o.getClassName());
+        }
+    }
+
+
+    @Test
+    public void test_By_Depth() throws UiObjectNotFoundException {
+        mDevice.pressHome();
+        Pattern p = Pattern.compile(".*");
+
+        //By.maxDepth, By.mainDepth and By.depth(from, to) don't exist, because they only exist in "BySelector", thus call "By.sthElse(...)" first
+        System.out.println("[Depth(exact)]: "+mDevice.findObjects(By.clazz(p).depth(0)).size());
+        System.out.println("[Depth(from, to)], both inclusive: "+mDevice.findObjects(By.clazz(p).depth(1,2)).size());
+        System.out.println("[MaxDepth(upperLimit)], inclusive: "+mDevice.findObjects(By.clazz(p).maxDepth(2)).size());
+        System.out.println("[MinDepth(lowerLimit)], inclusive: "+mDevice.findObjects(By.clazz(p).minDepth(2)).size());
     }
 }
