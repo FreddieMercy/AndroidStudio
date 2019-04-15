@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.icu.util.Output;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.RemoteException;
 import android.view.KeyEvent;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import androidx.test.uiautomator.BySelector;
+import androidx.test.uiautomator.Direction;
 import androidx.test.uiautomator.UiCollection;
 import androidx.test.uiautomator.UiDevice;
 
@@ -56,9 +58,17 @@ public class ExampleInstrumentedTest {
     private Instrumentation instrumentation;
 
     @Before
-    public void setUp_Method(){
+    public void setUp_Method() throws RemoteException {
         instrumentation = getInstrumentation();
         mDevice = UiDevice.getInstance(instrumentation);
+
+        //if(!mDevice.isScreenOn()){
+        mDevice.wakeUp();
+
+        if ((new UiObject(new UiSelector().packageName("com.android.systemui"))).exists()) {
+            mDevice.swipe(500, 1000, 500, 0, 10);
+        }
+        //}
     }
 
     @After
@@ -319,5 +329,26 @@ public class ExampleInstrumentedTest {
                 context.startActivity(intent);  //starts the app
             }
         }
+    }
+
+    @Test
+    public void testUIObj2_Drag(){
+        UiObject2 chrome = mDevice.findObject(By.text("Chrome"));
+        Point p = new Point();
+        p.x = 500;
+        p.y = 500;
+
+        chrome.drag(p, 1000);
+    }
+
+    @Test
+    public void test_UIObj2_Scroll() throws UiObjectNotFoundException{
+        //mDevice = UiDevice.getInstance(getInstrumentation());
+        mDevice.pressHome();
+        //mDevice.pressMenu();
+        (new UiObject(new UiSelector().description("Apps"))).click();
+        UiObject2 appList = mDevice.findObject(By.clazz("android.support.v7.widget.RecyclerView"));
+        mDevice.wait(Until.findObject(By.clazz("android.support.v7.widget.RecyclerView")), 3000);
+        appList.scroll(Direction.DOWN, .5f);
     }
 }
