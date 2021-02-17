@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/GoogleUIAutomator.iml" filepath="$PROJECT_DIR$/.idea/GoogleUIAutomator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GoogleUIAutomator.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GoogleUIAutomator.app.iml" />
     </modules>
   </component>
 </project>
