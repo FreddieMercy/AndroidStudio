@@ -8,6 +8,13 @@ pipeline {
             }
         }
         stage('Test') {
+            when {
+                // run echo 'Testing succeed as well ... nihao from Freddie'
+                // only when it is on the master branch
+                expression {
+                    BRANCH_NAME == 'master' // || BRANCH_NAME == 'dev'
+                }
+            }
             steps {
                 echo 'Testing succeed as well ... nihao from Freddie'
             }
