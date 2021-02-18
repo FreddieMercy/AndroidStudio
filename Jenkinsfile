@@ -18,4 +18,18 @@ pipeline {
             }
         }
     }
+
+    post{
+        // Conditions:
+        //  * always
+        //  * success
+        //  * failure
+        always{
+            // 
+        }
+
+        success{
+
+        }
+    }
 }
