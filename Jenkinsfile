@@ -1,3 +1,5 @@
+CODE_CHANGE = getGitChanges()
+
 pipeline {
     agent any // any agent... but what is 'agent'?
 
@@ -5,6 +7,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building succeed ... hello from Freddie'
+                echo CODE_CHANGE
             }
         }
         stage('Test') {
@@ -31,12 +34,12 @@ pipeline {
         //  * always
         //  * success
         //  * failure
-        always{
-            // 
-        }
+        // always{
+        //     // 
+        // }
 
-        success{
+        // success{
 
-        }
+        // }
     }
 }
