@@ -29,17 +29,17 @@ pipeline {
         }
     }
 
-    post{
-        // Conditions:
-        //  * always
-        //  * success
-        //  * failure
-        // always{
-        //     // 
-        // }
+    // post{
+    //     // Conditions:
+    //     //  * always
+    //     //  * success
+    //     //  * failure
+    //     // always{
+    //     //     // 
+    //     // }
 
-        // success{
+    //     // success{
 
-        // }
-    }
+    //     // }
+    // }
 }
