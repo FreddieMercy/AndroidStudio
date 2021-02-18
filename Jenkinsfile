@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent any // any agent... but what is 'agent'?
 
     stages {
         stage('Build') {
