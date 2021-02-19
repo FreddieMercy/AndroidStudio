@@ -91,6 +91,7 @@ pipeline {
         }
 
         failure{
+            // but need to set up smpt server on jenkins first
             mail to: 'junhao.zhang.freddie@gmail.com',
              subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
              body: "Something is wrong with ${env.BUILD_URL}"
