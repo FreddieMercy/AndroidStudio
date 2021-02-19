@@ -7,6 +7,12 @@ pipeline {
         SERVER_CREDENTIAL  = credentials('000de9c6-c646-4873-a968-e7598cf5c43f')
     }
 
+    parameters{
+        string(name:'WhoAmI', defaultValue:'Freddie', description:'a string name')
+        choice(name:'WhoIsMe', choices: ['Freddie', 'Junhao', 'Aaron'], description: 'Why Aaron? Cannot forget him?')
+        booleanParam(name:'forget', defaultValue:false, description:'you a loser')
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -14,6 +20,8 @@ pipeline {
                 echo "Build Version: ${ENV_VERSION} (double)"
                 echo 'Build Version: ${ENV_VERSION} (single)'
                 //echo CODE_CHANGE
+
+                echo params.WhoAmI
             }
         }
         stage('Test') {
@@ -21,7 +29,7 @@ pipeline {
                 // run echo 'Testing succeed as well ... nihao from Freddie'
                 // only when it is on the master branch
                 expression {
-                    BRANCH_NAME == 'master' // || BRANCH_NAME == 'dev'
+                    BRANCH_NAME == 'master' || params.forget == true// || BRANCH_NAME == 'dev'
                 }
             }
             steps {
@@ -31,6 +39,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying done .... say bye to Freddie '
+                echo params.WhoIsMe
             }
         }
     }
