@@ -91,6 +91,7 @@ pipeline {
         }
 
         failure{
+            // need to set up smtp service on jenkins 
             emailext body: "Something is wrong with ${env.BUILD_URL}",
                 subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
                 to: 'junhao.zhang.freddie@gmail.com'
