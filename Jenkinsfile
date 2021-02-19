@@ -37,6 +37,8 @@ pipeline {
             }
             steps {
                 echo 'Testing succeed as well ... nihao from Freddie'
+                sh 'make check || true' 
+                junit '**/target/*.xml'
             }
         }
         stage('Deploy') {
