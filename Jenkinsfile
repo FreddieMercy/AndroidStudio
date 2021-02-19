@@ -92,6 +92,7 @@ pipeline {
 
         failure{
             // need to set up smtp service on jenkins 
+            //TODO: But still cannot send email, even though credentials are right, and template is all set. 
             emailext body: "Something is wrong with ${env.BUILD_URL}",
                 subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
                 to: 'junhao.zhang.freddie@gmail.com'
