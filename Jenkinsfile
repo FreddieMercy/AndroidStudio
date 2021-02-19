@@ -22,6 +22,9 @@ pipeline {
                 //echo CODE_CHANGE
 
                 echo params.WhoAmI
+
+                sh 'make' 
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true 
             }
         }
         stage('Test') {
