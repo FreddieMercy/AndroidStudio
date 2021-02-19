@@ -42,12 +42,14 @@ pipeline {
             }
         }
         stage('Deploy') {
-            steps {
-                when{
-                    expression{
-                        currentBuild.result == null || currentBuild.result == 'SUCCESS'
-                    }
+            
+            when{
+                expression{
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
                 }
+            }
+
+            steps {
                 echo 'Deploying done .... say bye to Freddie '
                 echo params.WhoIsMe
                 sh 'make publish'
