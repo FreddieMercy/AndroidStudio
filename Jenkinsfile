@@ -4,6 +4,7 @@ pipeline {
     agent any // any agent... but what is 'agent'?
     environment{
         ENV_VERSION = '5.2.0' // define environment variable 
+        SERVER_CREDENTIAL  = credentials('000de9c6-c646-4873-a968-e7598cf5c43f')
     }
 
     stages {
@@ -41,6 +42,8 @@ pipeline {
         //  * failure
         always{
             echo 'always .... from Freddie'
+            echo "${SERVER_CREDENTIAL}"
+            //sh "${SERVER_CREDENTIAL}"
         }
 
         success{
