@@ -50,9 +50,20 @@ pipeline {
             }
 
             steps {
+
+                // 从上到下，按顺序运行
+                
                 echo 'Deploying done .... say bye to Freddie '
                 echo params.WhoIsMe
                 sh 'make publish'
+
+                retry(3) { // retry up to 3 times
+                    sh './flakey-deploy.sh'
+                }
+
+                timeout(time: 3, unit: 'MINUTES') { // must finish in 3 minutes, otherwise will be marked as failed. 
+                    sh './health-check.sh'
+                }
             }
         }
     }
@@ -62,6 +73,9 @@ pipeline {
         //  * always
         //  * success
         //  * failure
+        //  * unstable
+        //  * changed
+
         always{
             echo 'always .... from Freddie'
             echo "${SERVER_CREDENTIAL}"
