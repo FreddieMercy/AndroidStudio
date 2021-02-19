@@ -2,11 +2,16 @@
 
 pipeline {
     agent any // any agent... but what is 'agent'?
+    environment{
+        ENV_VERSION = '5.2.0' // define environment variable 
+    }
 
     stages {
         stage('Build') {
             steps {
                 echo 'Building succeed ... hello from Freddie'
+                echo "Build Version: ${ENV_VERSION} (double)"
+                echo 'Build Version: ${ENV_VERSION} (single)'
                 //echo CODE_CHANGE
             }
         }
