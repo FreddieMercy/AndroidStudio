@@ -65,6 +65,10 @@ pipeline {
         always{
             echo 'always .... from Freddie'
             echo "${SERVER_CREDENTIAL}"
+
+            echo "${JAVA_HOME}"
+            echo "${env.JAVA_HOME}"
+
             //sh "${SERVER_CREDENTIAL}"
         }
 
