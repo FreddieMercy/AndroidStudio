@@ -23,8 +23,9 @@ pipeline {
 
                 echo params.WhoAmI
 
-                sh 'make' 
-                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true 
+                //sh 'make' 
+                //TODO: make sure archives apk files
+                archiveArtifacts artifacts: '**.apk', fingerprint: true, allowEmptyArchive: true
             }
         }
         stage('Test') {
@@ -38,7 +39,9 @@ pipeline {
             steps {
                 echo 'Testing succeed as well ... nihao from Freddie'
                 sh 'make check || true' 
-                junit '**/target/*.xml'
+
+                //TODO: add junit test script, define how to verify results
+                //junit '**.xml'
             }
         }
         stage('Deploy') {
@@ -55,6 +58,9 @@ pipeline {
                 
                 echo 'Deploying done .... say bye to Freddie '
                 echo params.WhoIsMe
+
+                //TODO: make use of these
+                /*
                 sh 'make publish'
 
                 retry(3) { // retry up to 3 times
@@ -64,6 +70,8 @@ pipeline {
                 timeout(time: 3, unit: 'MINUTES') { // must finish in 3 minutes, otherwise will be marked as failed. 
                     sh './health-check.sh'
                 }
+
+                 */
             }
         }
     }
