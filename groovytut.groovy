@@ -28,8 +28,8 @@ class GroovyTut {
               println('I am ${age}')
               println("I am ${age}")
               println('''
-              I am ${age}
-              ''')
+                     I am ${age}
+                     ''')
 
               def name = 'Freddie'
 
@@ -38,6 +38,37 @@ class GroovyTut {
                      println("'${c}' : index = ${name.indexOf(c)}")
               }
 
-       }
+              printf('%10s %.2f\n', name, age)
+              printf('%-10s %.2f\n', name, age)
 
-}
+              try {
+                     print('What is your name? :')
+                     def yourName = System.console().readLine().toString()
+
+                     println('Hello ' + yourName + '\n\n')
+                     }catch (Exception e) { }
+
+              printf('%10s %.2f\n', [name, age])
+              printf('%-10s %.2f\n', [name, age])
+
+              def array = [1, 3, '7', 15.5]
+              println(array)
+              println(array[2] + array[3]) // str: "7" + "15.5"
+              println(array[1] + array[2]) // 后面的cast成前面的
+
+              // def dict = {'a':1, 'b':3.4, 'c':name}
+
+              // println(dict)
+
+              def bitwise = 1 << 3
+              println(bitwise)
+
+              def arr2 = [2, 4, 6]
+
+              println(array + arr2) //append
+              println(array - arr2)
+              println(array - ['7', 15.5])
+              println(array - ['7', 15.5] + arr2) //append
+              }
+
+       }
