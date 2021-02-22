@@ -14,6 +14,36 @@ pipeline {
     }
 
     stages {
+        stage('Parallelism'){
+            steps{
+                parallel(
+                    Number_1: {
+                        echo "This is branch Number_1"
+                    },
+                    Number_2: {
+                        echo "This is branch Number_2"
+                    },
+                    Number_3: {
+                        echo "This is branch Number_3"
+                    },
+                    Number_4: {
+                        echo "This is branch Number_4"
+                    },
+                    Number_5: {
+                        echo "This is branch Number_5"
+                    }
+                )
+            }
+        }
+        stage('Sequential'){
+            steps{
+                echo "This is branch Number_1"
+                echo "This is branch Number_2"
+                echo "This is branch Number_3"
+                echo "This is branch Number_4"
+                echo "This is branch Number_5"
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building succeed ... hello from Freddie'
