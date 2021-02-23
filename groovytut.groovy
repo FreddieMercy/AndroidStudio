@@ -56,9 +56,9 @@ class GroovyTut {
               println(array[2] + array[3]) // str: "7" + "15.5"
               println(array[1] + array[2]) // 后面的cast成前面的
 
-              // def dict = {'a':1, 'b':3.4, 'c':name}
-
-              // println(dict)
+              def dict = ['a':1, 'b':3.4, 'c':name]
+              println(dict)
+              println(dict['a'] + dict.get('b'))
 
               def bitwise = 1 << 3
               println(bitwise)
@@ -69,6 +69,30 @@ class GroovyTut {
               println(array - arr2)
               println(array - ['7', 15.5])
               println(array - ['7', 15.5] + arr2) //append
+
+              for (i in 0..7) {
+                     print(i)
+              }
+
+              println()
+
+              def addLambda = { num1, num2 -> (num1 + num2) }
+
+              println(addLambda(1, 2))
+
+              def printTest = { ->(println('Nihaoma from lambda')) }
+              printTest()
+
+              def printMul = { ->(println('A')
+              println('B')
+              println('C')
+              //cannot have local var,
+              // excepts params
+              // def tmp = 100+1
+              // println(tmp)
+              )}
+
+              printMul()
               }
 
        }
