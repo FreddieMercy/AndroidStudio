@@ -14,6 +14,36 @@ pipeline {
     }
 
     stages {
+        stage('Parallelism'){
+            steps{
+                parallel(
+                    Number_1: {
+                        echo "This is branch Number_1"
+                    },
+                    Number_2: {
+                        echo "This is branch Number_2"
+                    },
+                    Number_3: {
+                        echo "This is branch Number_3"
+                    },
+                    Number_4: {
+                        echo "This is branch Number_4"
+                    },
+                    Number_5: {
+                        echo "This is branch Number_5"
+                    }
+                )
+            }
+        }
+        stage('Sequential'){
+            steps{
+                echo "This is branch Number_1"
+                echo "This is branch Number_2"
+                echo "This is branch Number_3"
+                echo "This is branch Number_4"
+                echo "This is branch Number_5"
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building succeed ... hello from Freddie'
@@ -23,8 +53,9 @@ pipeline {
 
                 echo params.WhoAmI
 
-                sh 'make' 
-                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true 
+                //sh 'make' 
+                //TODO: make sure archives apk files
+                archiveArtifacts artifacts: '**.apk', fingerprint: true, allowEmptyArchive: true
             }
         }
         stage('Test') {
@@ -38,7 +69,9 @@ pipeline {
             steps {
                 echo 'Testing succeed as well ... nihao from Freddie'
                 sh 'make check || true' 
-                junit '**/target/*.xml'
+
+                //TODO: add junit test script, define how to verify results
+                //junit '**.xml'
             }
         }
         stage('Deploy') {
@@ -55,6 +88,9 @@ pipeline {
                 
                 echo 'Deploying done .... say bye to Freddie '
                 echo params.WhoIsMe
+
+                //TODO: make use of these
+                /*
                 sh 'make publish'
 
                 retry(3) { // retry up to 3 times
@@ -64,6 +100,8 @@ pipeline {
                 timeout(time: 3, unit: 'MINUTES') { // must finish in 3 minutes, otherwise will be marked as failed. 
                     sh './health-check.sh'
                 }
+
+                 */
             }
         }
     }
